@@ -1,0 +1,76 @@
+--- maze_gen_patch1.c	2024-12-18 23:46:19.894964812 +0300
++++ maze_gen_patch2.c	2024-12-18 23:46:36.788591782 +0300
+@@ -9,8 +9,8 @@
+     D_DIR,
+ } DIRECTIONS;
+ 
+-int create_path(int row, int col, int unmarked, char** maze, int size) {
+-    maze[row][col] = '.';
++int create_path(int row, int col, int unmarked, char** maze, int size, char pass) {
++    maze[row][col] = pass;
+     unmarked--;
+     if (!unmarked) {
+         return unmarked;
+@@ -36,20 +36,20 @@
+             int new_dir = dirs[rand() % closed];
+             switch (new_dir) {
+             case L_DIR:
+-                maze[row][col - 1] = '.';
+-                unmarked = create_path(row, col - 2, unmarked, maze, size);
++                maze[row][col - 1] = pass;
++                unmarked = create_path(row, col - 2, unmarked, maze, size, pass);
+                 break;
+             case U_DIR:
+-                maze[row - 1][col] = '.';
+-                unmarked = create_path(row - 2, col, unmarked, maze, size);
++                maze[row - 1][col] = pass;
++                unmarked = create_path(row - 2, col, unmarked, maze, size, pass);
+                 break;
+             case R_DIR:
+-                maze[row][col + 1] = '.';
+-                unmarked = create_path(row, col + 2, unmarked, maze, size);
++                maze[row][col + 1] = pass;
++                unmarked = create_path(row, col + 2, unmarked, maze, size, pass);
+                 break;
+             case D_DIR:
+-                maze[row + 1][col] = '.';
+-                unmarked = create_path(row + 2, col, unmarked, maze, size);
++                maze[row + 1][col] = pass;
++                unmarked = create_path(row + 2, col, unmarked, maze, size, pass);
+                 break;
+             }
+         }
+@@ -61,11 +61,13 @@
+ 
+     srand(time(NULL));
+ 
+-    if (argc < 2) {
++    if (argc < 3) {
+         printf("Wrong number of arguments.\n");
+         exit(1);
+     }
+-    int size = atoi(argv[1]);
++    char pass = argv[1][0];
++    char wall = argv[1][1];
++    int size = atoi(argv[2]);
+ 
+     char** maze = malloc((2 * size + 1) * sizeof(char*));
+     for (int i = 0; i < 2 * size + 1; i++)
+@@ -76,7 +78,7 @@
+             if (i % 2 == 1 && j % 2 == 1) {
+                 maze[i][j] = 0;
+             } else {
+-                maze[i][j] = '#';
++                maze[i][j] = wall;
+             }
+         }
+     }
+@@ -84,7 +86,7 @@
+     int row = (1 + rand() % size) * 2 - 1;
+     int col = (1 + rand() % size) * 2 - 1;
+     
+-    create_path(row, col, size * size, maze, size);
++    create_path(row, col, size * size, maze, size, pass);
+ 
+     for (int i = 0; i < 2 * size + 1; i++)
+         printf("%s\n", maze[i]);

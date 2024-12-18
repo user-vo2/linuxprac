@@ -1,0 +1,21 @@
+--- maze_gen_patch2.c	2024-12-18 23:46:36.788591782 +0300
++++ maze_gen_patch3.c	2024-12-18 23:47:04.346989108 +0300
+@@ -61,13 +61,14 @@
+ 
+     srand(time(NULL));
+ 
+-    if (argc < 3) {
++    if (argc < 4) {
+         printf("Wrong number of arguments.\n");
+         exit(1);
+     }
+-    char pass = argv[1][0];
+-    char wall = argv[1][1];
+-    int size = atoi(argv[2]);
++    srand(atoi(argv[1]));
++    char pass = argv[2][0];
++    char wall = argv[2][1];
++    int size = atoi(argv[3]);
+ 
+     char** maze = malloc((2 * size + 1) * sizeof(char*));
+     for (int i = 0; i < 2 * size + 1; i++)
