@@ -1,7 +1,8 @@
 /** @mainpage
 *   # Program that guesses user's number.
 */
-/** @page Program that guesses user's number.
+/** @page 
+*   Program that guesses user's number.
 *   Only yes or no replies are accepted. Can display numbers in roman notation.
 *   
 *   Arguments (not necessary):
@@ -83,7 +84,6 @@ int main(int argc, char** argv) {
             printf(_("Enter yes or no.\n"));
         }
     }
-    printf(_("The number is %d.\n"), min);
     if (roman_notation) {
         printf(_("The number is %s.\n"), arabic2roman(min));
     } else {

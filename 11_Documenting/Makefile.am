@@ -1,13 +1,20 @@
 AM_CFLAGS = -g -Wall -Wextra
 
-all-local: doxygen-doc
+@DX_RULES@
+
+all-local:doxygen-clean doxygen-doc
 
 man1_MANS = doxygen-doc/man/man1/guess.1
 bin_PROGRAMS=guess
 pkgdata_DATA = ./ru/LC_MESSAGES/guess.mo
 
+doxygen-clean:
+	rm -rf doxygen-doc
+
+doxygen-doc: doxygen-clean
+	doxygen Doxyfile
+
 doxygen-doc/man/man1/guess.1: doxygen-doc
-	help2man -N ./guess > $@
 
 install-data-local:
 	mkdir -p $(DESTDIR)/$(docdir)

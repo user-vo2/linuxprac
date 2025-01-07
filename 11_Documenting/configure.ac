@@ -2,9 +2,9 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.71])
-AC_INIT([guess], [1.0], [uservo4@gmail.com], [guess_doc])
+AC_INIT([guess], [1.0], [uservo4@gmail.com], [guess])
 AM_INIT_AUTOMAKE([foreign])
-DX_INIT_DOXYGEN([guess_doc])
+DX_INIT_DOXYGEN([guess])
 
 AC_CONFIG_SRCDIR([guess.c])
 AC_CONFIG_HEADERS([config.h])
